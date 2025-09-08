@@ -1,0 +1,72 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #ffffff;
+    color: #333;
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    max-width: 900px;
+    margin: 20px auto;
+    padding: 20px;
+}
+
+h1, h2 {
+    text-align: center;
+}
+
+form {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+
+form label {
+    width: 100px;
+    font-weight: bold;
+}
+
+form input, form select, form button {
+    padding: 5px;
+    font-size: 1rem;
+}
+
+form button {
+    cursor: pointer;
+}
+
+.image-preview, .image-list {
+    text-align: center;
+    margin-top: 20px;
+}
+
+#kochImage {
+    max-width: 100%;
+    height: auto;
+    border: 1px solid #ccc;
+    margin-top: 10px;
+}
+
+.thumbnail {
+    width: 120px;
+    height: auto;
+    margin: 5px;
+    border: 1px solid #ccc;
+}
+
+.error {
+    color: red;
+    font-weight: bold;
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+.success {
+    color: green;
+    font-weight: bold;
+    text-align: center;
+    margin-bottom: 10px;
+}
