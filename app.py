@@ -103,7 +103,7 @@ def create_koch_image(points, scale, iterations, color='blue', half_type='comple
         ax.set_aspect('equal')
         ax.axis('off')
         
-        title = f'Copo Koch'
+        title = f''
         ax.set_title(title, fontsize=16, fontweight='bold', pad=20)
         
         # Ajustar límites según el tipo
@@ -220,17 +220,18 @@ def clear_images():
 def generate_koch_api():
     """Endpoint API para generar copo de nieve"""
     try:
-        # Obtener parámetros
+        # Obtener parámetros con valores por defecto
         if request.method == 'POST':
             data = request.get_json() or {}
-            iterations = int(data.get('iterations', 4))
-            scale = float(data.get('scale', 2.0))
+            iterations = int(data.get('iterations', 4))  # Valor por defecto: 4
+            scale = float(data.get('scale', 2.0))        # Valor por defecto: 2.0
             color = data.get('color', 'blue')
             half_type = data.get('half_type', 'complete')
             return_image = data.get('return_image', True)
         else:
-            iterations = int(request.args.get('iterations', 4))
-            scale = float(request.args.get('scale', 2.0))
+            # Para GET, usar valores por defecto si no se proporcionan
+            iterations = int(request.args.get('iterations', 4))  # Valor por defecto: 4
+            scale = float(request.args.get('scale', 2.0))        # Valor por defecto: 2.0
             color = request.args.get('color', 'blue')
             half_type = request.args.get('half_type', 'complete')
             return_image = request.args.get('return_image', 'true').lower() == 'true'
