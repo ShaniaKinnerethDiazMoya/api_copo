@@ -2,3 +2,6 @@ flask
 gunicorn
 graphviz
 nbformat
+matplotlib==3.8.0
+numpy==1.26.2
+flask-cors
