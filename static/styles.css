@@ -19,35 +19,61 @@ h1, h2 {
 form {
     display: flex;
     flex-wrap: wrap;
-    gap: 10px;
+    gap: 15px;
     justify-content: center;
     margin-bottom: 20px;
+    align-items: center;
 }
 
 form label {
-    width: 100px;
+    width: 80px;
     font-weight: bold;
+    text-align: right;
 }
 
 form input, form select, form button {
-    padding: 5px;
+    padding: 8px 12px;
     font-size: 1rem;
+    border: 1px solid #ddd;
+    border-radius: 4px;
 }
 
 form button {
     cursor: pointer;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    margin: 0 5px;
+}
+
+form button:hover {
+    background-color: #0056b3;
+}
+
+#clearImages {
+    background-color: #dc3545;
+}
+
+#clearImages:hover {
+    background-color: #c82333;
 }
 
 .image-preview, .image-list {
     text-align: center;
-    margin-top: 20px;
+    margin-top: 30px;
+    padding: 20px;
+    border: 1px solid #eee;
+    border-radius: 8px;
+    background-color: #f9f9f9;
 }
 
 #kochImage {
     max-width: 100%;
     height: auto;
     border: 1px solid #ccc;
-    margin-top: 10px;
+    margin-top: 15px;
+    border-radius: 4px;
 }
 
 .thumbnail {
@@ -55,18 +81,27 @@ form button {
     height: auto;
     margin: 5px;
     border: 1px solid #ccc;
+    border-radius: 4px;
 }
 
 .error {
     color: red;
     font-weight: bold;
     text-align: center;
-    margin-bottom: 10px;
+    margin-bottom: 15px;
+    padding: 10px;
+    background-color: #ffe6e6;
+    border: 1px solid #ffcccc;
+    border-radius: 4px;
 }
 
 .success {
     color: green;
     font-weight: bold;
     text-align: center;
-    margin-bottom: 10px;
+    margin-bottom: 15px;
+    padding: 10px;
+    background-color: #e6ffe6;
+    border: 1px solid #ccffcc;
+    border-radius: 4px;
 }
