@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Koch Snowflake Generator</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>Koch Snowflake Generator</h1>
+
+        <form id="kochForm">
+            <label for="iterations">Iteraciones (0-8):</label>
+            <input type="number" id="iterations" name="iterations" value="4" min="0" max="8">
+
+            <label for="scale">Escala (0.1-10):</label>
+            <input type="number" id="scale" name="scale" value="2.0" step="0.1" min="0.1" max="10">
+
+            <label for="color">Color:</label>
+            <input type="color" id="color" name="color" value="#0000ff">
+
+            <label for="half_type">Tipo de copo:</label>
+            <select id="half_type" name="half_type">
+                <option value="complete">Completo</option>
+                <option value="inferior">Inferior</option>
+                <option value="superior">Superior</option>
+                <option value="izquierda">Izquierda</option>
+                <option value="derecha">Derecha</option>
+            </select>
+
+            <button type="submit">Generar Copo</button>
+            <button type="button" id="clearImages">Borrar Todas</button>
+        </form>
+
+        <div id="error" class="error"></div>
+        <div id="success" class="success"></div>
+
+        <div class="image-preview">
+            <h2>Última Imagen Generada</h2>
+            <img id="kochImage" src="" alt="Copo de Koch">
+        </div>
+
+        <div class="image-list">
+            <h2>Imágenes Existentes</h2>
+            <div id="imagesContainer"></div>
+        </div>
+    </div>
+
+    <script>
+        const form = document.getElementById('kochForm');
+        const kochImage = document.getElementById('kochImage');
+        const imagesContainer = document.getElementById('imagesContainer');
+        const errorDiv = document.getElementById('error');
+        const successDiv = document.getElementById('success');
+        const clearBtn = document.getElementById('clearImages');
+
+        async function fetchImages() {
+            const res = await fetch('/api/koch/list');
+            const data = await res.json();
+            imagesContainer.innerHTML = '';
+            if (data.images) {
+                data.images.forEach(img => {
+                    const imgEl = document.createElement('img');
+                    imgEl.src = img.url;
+                    imgEl.alt = img.filename;
+                    imgEl.className = 'thumbnail';
+                    imagesContainer.appendChild(imgEl);
+                });
+            }
+        }
+
+        form.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            errorDiv.textContent = '';
+            successDiv.textContent = '';
+
+            const iterations = document.getElementById('iterations').value;
+            const scale = document.getElementById('scale').value;
+            const color = document.getElementById('color').value;
+            const half_type = document.getElementById('half_type').value;
+
+            try {
+                const res = await fetch('/api/koch/generate', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ iterations, scale, color, half_type, return_image: true })
+                });
+
+                const data = await res.json();
+
+                if (data.error) {
+                    errorDiv.textContent = data.error;
+                } else if (data.success) {
+                    kochImage.src = 'data:image/png;base64,' + data.image_base64;
+                    successDiv.textContent = 'Copo generado correctamente!';
+                    fetchImages();
+                }
+
+            } catch (err) {
+                errorDiv.textContent = 'Error al conectar con la API';
+            }
+        });
+
+        clearBtn.addEventListener('click', async () => {
+            if (!confirm('¿Seguro que quieres borrar todas las imágenes?')) return;
+            try {
+                const res = await fetch('/api/koch/clear', { method: 'POST' });
+                const data = await res.json();
+                if (data.success) {
+                    kochImage.src = '';
+                    successDiv.textContent = data.message;
+                    fetchImages();
+                }
+            } catch (err) {
+                errorDiv.textContent = 'Error al borrar las imágenes';
+            }
+        });
+
+        // Cargar imágenes existentes al inicio
+        fetchImages();
+    </script>
+</body>
+</html>
