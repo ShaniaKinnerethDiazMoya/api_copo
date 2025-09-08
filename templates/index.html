@@ -11,11 +11,9 @@
         <h1>Koch Snowflake Generator</h1>
 
         <form id="kochForm">
-            <label for="iterations">Iteraciones (0-8):</label>
-            <input type="number" id="iterations" name="iterations" value="4" min="0" max="8">
-
-            <label for="scale">Escala (0.1-10):</label>
-            <input type="number" id="scale" name="scale" value="2.0" step="0.1" min="0.1" max="10">
+            <!-- Campos ocultos con valores por defecto -->
+            <input type="hidden" id="iterations" name="iterations" value="4">
+            <input type="hidden" id="scale" name="scale" value="2.0">
 
             <label for="color">Color:</label>
             <input type="color" id="color" name="color" value="#0000ff">
@@ -37,14 +35,10 @@
         <div id="success" class="success"></div>
 
         <div class="image-preview">
-            <h2>Última Imagen Generada</h2>
+            
             <img id="kochImage" src="" alt="Copo de Koch">
         </div>
 
-        <div class="image-list">
-            <h2>Imágenes Existentes</h2>
-            <div id="imagesContainer"></div>
-        </div>
     </div>
 
     <script>
